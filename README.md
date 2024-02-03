@@ -33,8 +33,6 @@ gcc -o outputName generate_key.c -lgmp
 or
 ./outputName 1024
 ```
-
-
 Replace the integers with the desired key size.
 
 ### Degradation of Keys
@@ -51,7 +49,8 @@ This performs a degradation on the keys with a given probability. This probabili
 
 1. To obtain the degraded value of d in its decimal form, compile and run `print_value_degraded.c`:
 ```bash
-gcc -o outputName print_value_degraded.c -lgmp && ./outputName
+gcc -o outputName print_value_degraded.c -lgmp
+./outputName
 ```
 
 After obtaining the necessary values, proceed with `Heninger_part1.c` and `Heninger_part2.c` as described, setting the necessary values manually.
