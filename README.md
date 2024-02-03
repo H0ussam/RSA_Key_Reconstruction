@@ -24,7 +24,20 @@ compile and run the file degradation.c
 
 `gcc -o outputName degradation.c -lgmp` && `./outputName`
 
-this will preform a degradation on the keys with a given probability that you should set manually within the file itself, it is a public variable named `KNOWN_BIT_PERCENTAGE`
+this will preform a degradation on the keys with a given probability that you should set manually within the file itself, it is a public variable named `KNOWN_BIT_PERCENTAGE`.
+
+As we said before, it will yeild the degraded values of the key in a specific form, but you shall need the degraded version of d in it's decimal form to run the first phase of the algorithm Heninger_part2.c.
+
+To tackle the above and get the value of d, compile and run the file named print_value_degraded.c.
+
+`gcc -o outputName print_value_degraded.c -lgmp` && `./outputName`
+
+At this point you are all set with your values, save your degraded version of d and off to the main work.
+
+note:`We implemented the first phase of the algorithm on a more real life scenario, where the attacker will have no idea which bits are correct and which ones have been flipped, thus we have found by experiment, any key with error probability superior than 45% the program Heninger_part1.c has a very low chance of yeilding the correct values, we advise you to degrade the keys with a fixed probability between 15% and 45%, until later when we add the exact implementation of Heninsger-Shacham where you know the position of the correct bits exactly`.
+
+
+
 
 
 
