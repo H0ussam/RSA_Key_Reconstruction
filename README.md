@@ -23,3 +23,7 @@ The implementation comprises mainly two parts:
 ### Generating Keys
 
 1. Compile `generate_key.c`:
+
+```bash
+gcc -o outputName generate_key.c -lgmp
+```
