@@ -60,7 +60,7 @@ void flip_bits_and_compute_d(const char *orig_filename, const char *mod_filename
 
 int main() {
 
-    flip_bits_and_compute_d("rsakey.txt", "known_bits_d.txt");
+    flip_bits_and_compute_d("RSA-Key.txt", "known_bits_d.txt");
 
     return 0;
 }
