@@ -29,7 +29,8 @@ gcc -o outputName generate_key.c -lgmp
 ```
 2. Run it with:
 ```bash
-./outputName 512 or
+./outputName 512
+or
 ./outputName 1024
 ```
 
@@ -41,13 +42,26 @@ Replace the integers with the desired key size.
 1. Compile and run `degradation.c`:
 
 ```bash
-gcc -o outputName degradation.c -lgmp && ./outputName
+gcc -o outputName degradation.c -lgmp
+./outputName
 ```
 This performs a degradation on the keys with a given probability. This probability is a public variable named `KNOWN_BIT_PERCENTAGE` within the file.
 
 ### Getting the Degraded Value of d
 
 1. To obtain the degraded value of d in its decimal form, compile and run `print_value_degraded.c`:
+```bash
+gcc -o outputName print_value_degraded.c -lgmp && ./outputName
+```
+
+After obtaining the necessary values, proceed with `Heninger_part1.c` and `Heninger_part2.c` as described, setting the necessary values manually.
+
+## Running the Program
+
+- **Normal Execution:** `./outputName` directly yields the values of p and q, thus factorizing N and addressing the mathematical problem linked to the security of RSA.
+- **Verbose Mode:** `./outputName -v` shows the process of branching and pruning up to the final value.
+
+Thank you for reading.
 
 
 
