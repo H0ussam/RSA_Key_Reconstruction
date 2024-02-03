@@ -4,6 +4,10 @@
 #include <stdint.h>
 #include <string.h>
 
+// Define the ValidSolution struct before using it
+typedef struct {
+    char slice[5];
+} ValidSolution;
 
 // Read files that store known bits
 void readKnownBits(const char* filename, int known_bits[]) {
@@ -208,6 +212,7 @@ void BranchAndPrune(
     char possibilities[][5], int num_possibilities,
     int known_bits_p[], int known_bits_q[], int known_bits_d[], int known_bits_dp[], int known_bits_dq[], bool verbose, 
     int counter) {
+        
     ValidSolution validSolutions[2]; 
     int validSolutionsCount = 0;
     mpz_t result_n, result_d;
@@ -263,12 +268,14 @@ void BranchAndPrune(
                 gmp_printf("The correct value of d is : %Zu\n", result_d);
                 gmp_printf("The correct value of dp is : %Zu\n", my_dp);
                 gmp_printf("The correct value of dq is : %Zu\n", my_dq);
+                
                 return;
                 }
+
             }
         }
     }
-
+    mpz_clears(result_n, result_d, NULL);
     for (int i = 0; i < validSolutionsCount; i++) {
         // Clone the mpz_t variables to avoid modifying the originals prematurely
         mpz_t cloned_my_p, cloned_my_q, cloned_my_d, cloned_my_dp, cloned_my_dq;
@@ -331,7 +338,7 @@ int main(int argc, char *argv[]) {
     
     // Initialize GMP variables 
     mpz_t e, k, kp, kq, N, p, q, d, dp, dq, my_p, my_q, my_d, my_dp, my_dq,result_p, result_q;
-    mpz_inits(N, k, kp, kq, p, q, d, dp, dq, result_p, result_q, NULL);
+    mpz_inits(e, k, kp, kq, N, p, q, d, dp, dq, my_p, my_q, my_d, my_dp, my_dq,result_p, result_q, NULL);
 
     mpz_init2(my_p, 512);   mpz_set_ui(my_p, 0);
     mpz_init2(my_q, 512);   mpz_set_ui(my_q, 0);
@@ -347,7 +354,6 @@ int main(int argc, char *argv[]) {
     // Set value for N (example value, replace with actual value)
     FILE *file = fopen("keys/RSA-Key.txt", "r");
     read_component(N, file);
-    //read_and_convert_component(e, file);
 
     // Set the value for e (common RSA public exponent)
     mpz_init_set_ui(e, 65537);
@@ -367,23 +373,12 @@ int main(int argc, char *argv[]) {
     int tau_kp = tau(kp);
     int tau_kq = tau(kq);
     
-
-    // Prepare slice0 array to hold initial bits
-    char slice0[5];
-
-    // getGmpBit(mpz_t number, int i)
-    slice0[0] = getGmpBit(my_p, 0); 
-    slice0[1] = getGmpBit(my_q, 0); 
-    slice0[2] = getGmpBit(my_d, tau_k); 
-    slice0[3] = getGmpBit(my_dp, tau_kp); 
-    slice0[4] = getGmpBit(my_dq, tau_kq); 
-
     // Print initial bits
     gmp_printf("Correction: p[0]=%Zu, q[0]=%Zu, d[%d]=%Zu, dp[%d]=%Zu, dq[%d]=%Zu\n", 
            my_p, my_q,tau_k + 2 , my_d,tau_kp + 1, my_dp,tau_kq+1, my_dq);
     
     gmp_printf("Slice(0): p[0]=%d, q[0]=%d, d[%d]=%d, dp[%d]=%d, dq[%d]=%d\n", 
-           slice0[0],slice0[1], tau_k , slice0[2],tau_kp, slice0[3],tau_kq, slice0[4]);
+           getGmpBit(my_p, 0), getGmpBit(my_q, 0), tau_k , getGmpBit(my_d, tau_k),tau_kp, getGmpBit(my_dp, tau_kp),tau_kq, getGmpBit(my_dq, tau_kq));
     
     // Start the core algorithm of Heninger and Shacham
     BranchAndPrune(result_p, result_q, my_p, my_q, my_d, my_dp, my_dq, e, k, kp, kq, N, tau_k, tau_kp, tau_kq, possibilities, 32, known_bits_p,known_bits_q,known_bits_d,known_bits_dp,known_bits_dq, verbose, 1);
@@ -392,7 +387,7 @@ int main(int argc, char *argv[]) {
     BranchAndPrune(result_p, result_q, my_p, my_q, my_d, my_dp, my_dq, e, k, kq, kp, N, tau_k, tau_kq, tau_kp, possibilities, 32, known_bits_p,known_bits_q,known_bits_d,known_bits_dp,known_bits_dq, verbose, 1);
 
     // Clean up
-    mpz_clears(e, k, kp, kq, N, p, q, d, dp, dq, result_p, result_q, NULL);
+    mpz_clears(e, k, kp, kq, N, p, q, d, dp, dq, my_p, my_q, my_d, my_dp, my_dq,result_p, result_q, NULL);
 
     return 0;
 }
