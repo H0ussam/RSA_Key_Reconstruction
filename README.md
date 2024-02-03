@@ -14,6 +14,18 @@ Compile the file generate_key.c:
 
 `$gcc -o outputName generate_key.c -lgmp`
 
+to run it:
+
+`./outputName 512` or `./outputName 1024`, replace the inetegrs with whatever size you wish to generate.
+
+you ll get multiple file, we will let you exploare.
+
+compile and run the file degradation.c
+
+`gcc -o outputName degradation.c -lgmp` && `./outputName`
+
+this will preform a degradation on the keys with a given probability that you should set manually within the file itself, it is a public variable named `KNOWN_BIT_PERCENTAGE`
+
 
 
 
