@@ -11,14 +11,12 @@ typedef struct {
 } ValidSolution;
 
 // Read files that store known bits
-void readKnownBits(const char* filename, int known_bits[32]) {
+void readKnownBits(const char* filename, int known_bits[]) {
     FILE* file = fopen(filename, "r");
     if (!file) {
         perror("Error opening file");
         return;
     }
-
-    memset(known_bits, -1, sizeof(int) * 32); // Initialize all bits to -1
 
     int index, value;
     while (fscanf(file, "%d %d", &index, &value) == 2) {
@@ -184,6 +182,29 @@ void compute_qp_from_dpq( mpz_t result, mpz_t e,  mpz_t k, mpz_t temp_dp){
 
 }
 
+void calculate_d(mpz_t d, const mpz_t p, const mpz_t q, const mpz_t e) {
+    mpz_t p_minus_1, q_minus_1, phi;
+
+    // Initialize GMP integers
+    mpz_init(p_minus_1);
+    mpz_init(q_minus_1);
+    mpz_init(phi);
+
+    // Calculate p - 1 and q - 1
+    mpz_sub_ui(p_minus_1, p, 1);
+    mpz_sub_ui(q_minus_1, q, 1);
+
+    // Calculate phi(N) = (p - 1) * (q - 1)
+    mpz_mul(phi, p_minus_1, q_minus_1);
+
+    mpz_invert(d, e, phi);
+    // Clear GMP integers
+    mpz_clear(p_minus_1);
+    mpz_clear(q_minus_1);
+    mpz_clear(phi);
+}
+
+
 // The core of the Heninger-Shacham algorithm
 void BranchAndPrune(
     mpz_t result_p, mpz_t result_q, mpz_t my_p, mpz_t my_q, mpz_t my_d, mpz_t my_dp, mpz_t my_dq,
@@ -194,8 +215,8 @@ void BranchAndPrune(
     int counter) {
     ValidSolution validSolutions[2]; 
     int validSolutionsCount = 0;
-    mpz_t result_n;
-    mpz_init(result_n);
+    mpz_t result_n, result_d;
+    mpz_inits(result_n, result_d, NULL);
 
 
     for (int i = 0; i <= num_possibilities; i++) {
@@ -240,15 +261,17 @@ void BranchAndPrune(
                 compute_qp_from_dpq(result_q, e, kq, my_dq );
                 mpz_mul(result_n, result_p, result_q);
                 if (mpz_cmp(result_n, N) == 0 ) {
-
-                    gmp_printf("The resulted P is : %Zu\n", result_p);
-                    gmp_printf("The resulted Q is : %Zu\n", result_q);
-                    goto finish;
+                printf("\n------------------------------------------------------------\n\t\t\tResults:\n------------------------------------------------------------\n");
+                gmp_printf("The correct value of p is : %Zu\n", result_p);
+                gmp_printf("The correct value of q is : %Zu\n", result_q);
+                calculate_d(result_d, result_p, result_q, e);
+                gmp_printf("The correct value of d is : %Zu\n", result_d);
+                gmp_printf("The correct value of dp is : %Zu\n", my_dp);
+                gmp_printf("The correct value of dq is : %Zu\n", my_dq);
+                return;
                 }
-
             }
         }
-
     }
 
     for (int i = 0; i < validSolutionsCount; i++) {
@@ -283,10 +306,6 @@ void BranchAndPrune(
         mpz_clear(cloned_my_dq);
         
     }
-
-    finish:
-        return;
-    
 }
 
 
@@ -326,12 +345,12 @@ int main(int argc, char *argv[]) {
     mpz_init2(my_dq, 512);   mpz_set_ui(my_dq, 0);
 
     // Set values for k, kp, kq
-    mpz_set_ui(k, 40023); 
-    mpz_set_ui(kp, 57300);  
-    mpz_set_ui(kq, 48356); 
+    mpz_set_ui(k, 30202); 
+    mpz_set_ui(kp, 63793);  
+    mpz_set_ui(kq, 40527); 
 
     // Set value for N (example value, replace with actual value)
-    FILE *file = fopen("keys/rsakey.txt", "r");
+    FILE *file = fopen("keys/RSA-Key.txt", "r");
     read_and_convert_component(N, file);
     //read_and_convert_component(e, file);
 
