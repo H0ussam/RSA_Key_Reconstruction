@@ -10,4 +10,7 @@ The file named  Heninger_part2.c deals witht he branch and prune part, it verifi
 
 The keys degraded should be in a certain format for Heninger_part2.c to ork properly
 
-Compile the file 
+Compile the file generate_key.c:
+
+(')$gcc -o outputName generate_key.c -lgmp
+
