@@ -8,4 +8,6 @@ For exhaustive details please read the mentioned paper above.
 
 The file named  Heninger_part2.c deals witht he branch and prune part, it verifies all possible combination of bits for the coponents (d, p, q, d_p, d_q) at a given position "bit i", if they verifiy certain conditions mentioned in the paper, they are added to in the position i otherwise pruned; again for exhaustive details check the paper x)
 
-The keys degraded should be in a certain format we decided to use,  
+The keys degraded should be in a certain format for Heninger_part2.c to ork properly
+
+Compile the file 
