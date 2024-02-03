@@ -33,9 +33,16 @@ To tackle the above and get the value of d, compile and run the file named print
 
 `gcc -o outputName print_value_degraded.c -lgmp` && `./outputName`
 
-At this point you are all set with your values, save your degraded version of d and off to the main work.
+At this point you are all set with your values, save your degraded version of d and off to Heninger_part1.c, where you should set manually the values of your N, and degraded version of d.
+In the same way compile & run your prrogram then analyse the results.
 
 note:`We implemented the first phase of the algorithm on a more real life scenario, where the attacker will have no idea which bits are correct and which ones have been flipped, thus we have found by experiment, any key with error probability superior than 45% the program Heninger_part1.c has a very low chance of yeilding the correct values, we advise you to degrade the keys with a fixed probability between 15% and 45%, until later when we add the exact implementation of Heninsger-Shacham where you know the position of the correct bits exactly`.
+
+Finally from the output of Heninger_part1.c, get the values of k, kp, kq, set them manually along side N which should be modified to; Compile then run in the same way.
+
+note`If you get inccorect results, you might want to interchange the values of kp and kq, because we are not sure which one is kp and which one is kq, it is only a matter of testing, and for further details please check the paper.`
+
+
 
 
 
