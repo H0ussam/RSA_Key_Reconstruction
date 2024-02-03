@@ -1,4 +1,4 @@
-We aimed to implement the Heninger-shacham algorithm [Reconstructing RSA Private Keys from Random Key Bits](https://link.springer.com/chapter/10.1007/978-3-642-03356-8_1), it is partially based on the premise that an attacker can exploit a phyicaly property of memories "type DRAM" by conducting a [Cold Boot Attack](https://citp.princeton.edu/our-work/memory/) and reforming a dump of the memory.
+We aimed to implement the Heninger-shacham algorithm [Reconstructing RSA Private Keys from Random Key Bits](https://link.springer.com/chapter/10.1007/978-3-642-03356-8_1), it is partially based on the premise that an attacker can exploit a phyicaly property of memories "type DRAM" by conducting a [Cold Boot Attack](https://citp.princeton.edu/our-work/memory/) and preforming a dump of the memory.
 It turned out that DRAMs don't earease bits stored within it immediatly after shutdown, instead the capacitors leak charges over time until reaching thier ground states, this open a wide window for exploitation.
 
 you find mainly 2 parts of the whole algorithm:
