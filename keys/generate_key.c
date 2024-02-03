@@ -22,7 +22,7 @@ void generate_distinct_primes(mpz_t p, mpz_t q, unsigned int bit_size) {
 }
 
 void save_to_bit_file(FILE *file, mpz_t num) {
-    size_t size = mpz_sizeinbase(num, 2) + 2; // +2 for null-terminator and potential '-' sign
+    size_t size = mpz_sizeinbase(num, 2) + 2; 
     char *str = malloc(size);
     if (str == NULL) {
         fprintf(stderr, "Memory allocation failed\n");
@@ -88,9 +88,9 @@ int main(int argc, char *argv[]) {
     mpz_clears(p_1, q_1, NULL);
 
     // Open files for saving in decimal, hexadecimal, and bit formats
-    FILE *file = fopen("rsakey.txt", "w");
-    FILE *hexFile = fopen("hexaRSAkey.txt", "w");
-    FILE *bitsFile = fopen("rsabitskey.txt", "w");
+    FILE *file = fopen("RSA-Key.txt", "w");
+    FILE *hexFile = fopen("hexa-RSA-Key.txt", "w");
+    FILE *bitsFile = fopen("bits-RSA-Key.txt", "w");
 
     if (!file || !hexFile || !bitsFile) {
         fprintf(stderr, "Error opening files\n");
