@@ -4,7 +4,7 @@
 #include <time.h>
 #include <string.h>
 
-#define KNOWN_BIT_PERCENTAGE 80
+#define KNOWN_BIT_PERCENTAGE 70
 
 typedef struct {
     int position;
@@ -21,10 +21,6 @@ void read_and_convert_component(mpz_t component, FILE *file) {
     }
 }
 
-// The is fucntion write a given component written in the format of known and unknow bits to the actual integer value
-void write_component() {
-
-}
 
 
 void degrade_component(mpz_t component, const char *filename) {
@@ -51,6 +47,7 @@ void degrade_component(mpz_t component, const char *filename) {
 
     for (unsigned int i = 0; i < total_bits; ++i) {
         unsigned int j = gmp_urandomm_ui(state, total_bits);
+        
         // Swap elements i and j
         unsigned int temp = indices[i];
         indices[i] = indices[j];
@@ -82,9 +79,9 @@ int main() {
     mpz_t n, e, d, p, q, dp, dq, qp;
     mpz_inits(n, e, d, p, q, dp, dq, qp, NULL);
 
-    FILE *rsakey = fopen("hexaRSAkey.txt", "r");
+    FILE *rsakey = fopen("hexa-RSA-Key.txt", "r");
     if (!rsakey) {
-        perror("Error opening hexaRSAkey.txt");
+        perror("Error opening hexa-RSA-Key.txt");
         return 1;
     }
 
