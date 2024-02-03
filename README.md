@@ -12,5 +12,7 @@ The keys degraded should be in a certain format for Heninger_part2.c to ork prop
 
 Compile the file generate_key.c:
 
-'$gcc -o outputName generate_key.c -lgmp'
+'''bash
+$gcc -o outputName generate_key.c -lgmp
+'''
 
