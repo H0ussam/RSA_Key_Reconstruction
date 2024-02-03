@@ -5,11 +5,6 @@
 #include <string.h>
 
 
-// Define the ValidSolution struct before using it
-typedef struct {
-    char slice[5];
-} ValidSolution;
-
 // Read files that store known bits
 void readKnownBits(const char* filename, int known_bits[]) {
     FILE* file = fopen(filename, "r");
@@ -28,7 +23,7 @@ void readKnownBits(const char* filename, int known_bits[]) {
     fclose(file);
 }
 
-void read_and_convert_component(mpz_t component, FILE *file) {
+void read_component(mpz_t component, FILE *file) {
     char buffer[2048]; 
     if (fgets(buffer, sizeof(buffer), file) != NULL) {
 
@@ -351,7 +346,7 @@ int main(int argc, char *argv[]) {
 
     // Set value for N (example value, replace with actual value)
     FILE *file = fopen("keys/RSA-Key.txt", "r");
-    read_and_convert_component(N, file);
+    read_component(N, file);
     //read_and_convert_component(e, file);
 
     // Set the value for e (common RSA public exponent)
