@@ -27,3 +27,27 @@ The implementation comprises mainly two parts:
 ```bash
 gcc -o outputName generate_key.c -lgmp
 ```
+2. Run it with:
+```bash
+./outputName 512 or
+./outputName 1024
+```
+
+
+Replace the integers with the desired key size.
+
+### Degradation of Keys
+
+1. Compile and run `degradation.c`:
+
+```bash
+gcc -o outputName degradation.c -lgmp && ./outputName
+```
+This performs a degradation on the keys with a given probability. This probability is a public variable named `KNOWN_BIT_PERCENTAGE` within the file.
+
+### Getting the Degraded Value of d
+
+1. To obtain the degraded value of d in its decimal form, compile and run `print_value_degraded.c`:
+
+
+
