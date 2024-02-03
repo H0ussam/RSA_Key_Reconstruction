@@ -39,8 +39,6 @@ In the same way compile & run your prrogram then analyse the results.
 
 Finally from the output of Heninger_part1.c, get the values of k, kp, kq, and set them manually; Compile then run in the same way.
 
-note`If you get inccorect results, you might want to interchange the values of kp and kq, because we are not sure which one is kp and which one is kq, it is only a matter of testing, and for further details please check the paper.`
-
 After commpiling, you can run your program in 2 ways:
 
 the normal way -----> `./outputName`; Will yeild directly the values of p and q thus you have factorized N and solved the mathematical problem linked to the security of RSA.
